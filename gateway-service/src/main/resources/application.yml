@@ -1,0 +1,20 @@
+server:
+  port: 8888
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+
+spring:
+  application:
+    name: food-app-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: bank
+          uri: lb://bank-service
+          predicates:
+          - Path=/bank/**
