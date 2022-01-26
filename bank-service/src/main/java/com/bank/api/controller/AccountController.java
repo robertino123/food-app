@@ -1,6 +1,6 @@
 package com.bank.api.controller;
 
-import com.bank.api.domain.User;
+import com.bank.api.dto.UserDTO;
 import com.bank.api.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,7 @@ public class AccountController {
     private AccountService accountService;
 
     @PostMapping("/register")
-    public String createAccount(@Valid @RequestBody User user) {
+    public String createAccount(@Valid @RequestBody UserDTO user) {
         return accountService.createAccount(user);
     }
 

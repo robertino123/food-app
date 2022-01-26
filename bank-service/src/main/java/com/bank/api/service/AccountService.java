@@ -1,9 +1,9 @@
 package com.bank.api.service;
 
-import com.bank.api.domain.User;
+import com.bank.api.dto.UserDTO;
 
 public interface AccountService {
-    String createAccount(User user);
+    String createAccount(UserDTO user);
 
     String verifyAccounts(String accountFrom, String accountTo);
 

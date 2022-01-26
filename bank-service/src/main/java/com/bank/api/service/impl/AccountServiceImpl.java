@@ -3,6 +3,8 @@ package com.bank.api.service.impl;
 import com.bank.api.domain.Account;
 import com.bank.api.domain.AccountType;
 import com.bank.api.domain.User;
+import com.bank.api.dto.UserDTO;
+import com.bank.api.mapper.UserMapper;
 import com.bank.api.repository.AccountRepository;
 import com.bank.api.repository.UserRepository;
 import com.bank.api.service.AccountService;
@@ -25,11 +27,15 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
+    @Autowired
+    private UserMapper userMapper;
+
     @Override
-    public String createAccount(User user) {
-        userRepository.save(user);
+    public String createAccount(UserDTO user) {
+        User userToSave = userMapper.toEntity(user);
+        User savedUser = userRepository.save(userToSave);
         Long accountNumber = getAccountNumber();
-        Account account = new Account(user, accountNumber, new Date(), 50000L, 50000L, AccountType.CURRENT_ACCOUNT);
+        Account account = new Account(savedUser, accountNumber, new Date(), 50000L, 50000L, AccountType.CURRENT_ACCOUNT);
         accountRepository.save(account);
         return ACCOUNT_CREATED + accountNumber + " account type : " + account.getAccountType();
     }

@@ -17,4 +17,4 @@ spring:
         - id: bank
           uri: lb://bank-service
           predicates:
-          - Path=/bank/**
+            - Path=/bank/**

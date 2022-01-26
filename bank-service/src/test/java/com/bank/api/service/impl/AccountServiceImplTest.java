@@ -1,8 +1,6 @@
 package com.bank.api.service.impl;
 
-import com.bank.api.domain.Account;
-import com.bank.api.domain.AccountType;
-import com.bank.api.domain.User;
+import com.bank.api.mapper.UserMapper;
 import com.bank.api.repository.AccountRepository;
 import com.bank.api.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -12,18 +10,14 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.Date;
 import java.util.Optional;
 
+import static com.bank.utils.Constants.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 public class AccountServiceImplTest {
 
-    public static final User USER_1_MOCK = new User(1L, "fNameTest1", "lNameTest1", 19, 9876212124L, "test1@email.com");
-    public static final User USER_2_MOCK = new User(2L, "fNameTest2", "lNameTest2", 21, 9876341224L, "test2@email.com");
-    public static final Account ACCOUNT_1_MOCK = new Account(USER_1_MOCK, 12345L, new Date(), 500000L, 500000L, AccountType.CURRENT_ACCOUNT);
-    public static final Account ACCOUNT_2_MOCK = new Account(USER_2_MOCK, 12344L, new Date(), 100000L, 100000L, AccountType.CURRENT_ACCOUNT);
 
     @InjectMocks
     AccountServiceImpl accountService;
@@ -34,12 +28,15 @@ public class AccountServiceImplTest {
     @Mock
     UserRepository userRepository;
 
+    @Mock
+    UserMapper userMapper;
+
     @Test
     public void createAccountShouldCreate() {
         Mockito.when(userRepository.save(USER_1_MOCK)).thenReturn(USER_1_MOCK);
         Mockito.when(accountRepository.save(ACCOUNT_1_MOCK)).thenReturn(ACCOUNT_1_MOCK);
 
-        String actual = accountService.createAccount(USER_1_MOCK);
+        String actual = accountService.createAccount(USER_DTO_MOCK);
         assertNotNull(actual);
     }
 

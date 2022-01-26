@@ -6,6 +6,7 @@ import com.bank.api.dto.FundTransferDTO;
 import com.bank.api.repository.AccountRepository;
 import com.bank.api.repository.FundTransferRepository;
 import com.bank.api.service.StatementService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 import static com.bank.api.utils.Constants.getFirstDayOfMonth;
 
 @Service
+@Slf4j
 public class StatementServiceImpl implements StatementService {
 
     @Autowired
@@ -33,7 +35,7 @@ public class StatementServiceImpl implements StatementService {
         try {
             date1 = new SimpleDateFormat("dd/MM/yyyy").parse(getFirstDayOfMonth(month, year));
         } catch (ParseException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
 
         Calendar c = Calendar.getInstance();
