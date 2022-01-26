@@ -8,10 +8,14 @@ import com.bank.api.mapper.UserMapper;
 import com.bank.api.repository.AccountRepository;
 import com.bank.api.repository.UserRepository;
 import com.bank.api.service.AccountService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
 
@@ -19,6 +23,7 @@ import static com.bank.api.utils.Constants.ACCOUNT_CREATED;
 import static com.bank.api.utils.Constants.ACCOUNT_NOT_FOUND;
 
 @Service
+@Slf4j
 public class AccountServiceImpl implements AccountService {
 
     @Autowired
@@ -59,8 +64,15 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private Long getAccountNumber() {
-        Random rand = new Random();
-        String accNoString = String.format("%04d", rand.nextInt(10000));
+
+        Random rand = null;
+        try {
+            rand = SecureRandom.getInstanceStrong();
+        } catch (NoSuchAlgorithmException e) {
+            log.error(e.getMessage());
+        }
+
+        String accNoString = String.format("%04d", Objects.requireNonNull(rand).nextInt(10000));
         return Long.parseLong(accNoString);
     }
 
