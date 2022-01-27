@@ -18,3 +18,7 @@ spring:
           uri: lb://bank-service
           predicates:
             - Path=/bank/**
+        - id: food
+          uri: lb://food-service
+          predicates:
+            - Path=/food/**

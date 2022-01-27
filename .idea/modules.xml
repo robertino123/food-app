@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/bank-service/api.iml" filepath="$PROJECT_DIR$/bank-service/api.iml" />
       <module fileurl="file://$PROJECT_DIR$/eureka-server/eureka.iml" filepath="$PROJECT_DIR$/eureka-server/eureka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/food-service/food.iml" filepath="$PROJECT_DIR$/food-service/food.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/food-app.iml" filepath="$PROJECT_DIR$/.idea/food-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/gateway-service/gateway.iml" filepath="$PROJECT_DIR$/gateway-service/gateway.iml" />
     </modules>

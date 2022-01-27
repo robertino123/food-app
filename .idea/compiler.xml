@@ -10,7 +10,7 @@
         <module name="eureka" />
         <module name="gateway" />
       </profile>
-      <profile name="Annotation profile for bank" enabled="true">
+      <profile name="Annotation profile for food-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -19,19 +19,22 @@
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.4.2.Final/mapstruct-processor-1.4.2.Final.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.4.2.Final/mapstruct-1.4.2.Final.jar" />
         </processorPath>
+        <module name="food" />
         <module name="api" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="api" target="11" />
-      <module name="eureka" target="17" />
-      <module name="gateway" target="17" />
+      <module name="eureka" target="11" />
+      <module name="food" target="11" />
+      <module name="gateway" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="api" options="-parameters" />
       <module name="eureka" options="-parameters" />
+      <module name="food" options="-parameters" />
       <module name="gateway" options="-parameters" />
     </option>
   </component>
