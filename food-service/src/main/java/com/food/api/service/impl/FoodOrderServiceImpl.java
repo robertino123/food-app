@@ -97,7 +97,7 @@ public class FoodOrderServiceImpl implements FoodOrderService {
     }
 
     private String getDateFormatted(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         return format.format(date);
     }
 }
