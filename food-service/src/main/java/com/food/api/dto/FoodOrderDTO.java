@@ -22,5 +22,5 @@ public class FoodOrderDTO {
 
     private Long userId;
 
-    private Date createdDate;
+    private String createdDate;
 }

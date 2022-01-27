@@ -47,5 +47,3 @@ Bfood-service/src/main/java/com/food/api/service/VendorService.java,6\1\614a651
 Kfood-service/src/main/java/com/food/api/service/impl/VendorServiceImpl.java,d\8\d86630a0f7db5f040f5ec0c4e690a42969e9d330
 r
 Bfood-service/src/main/java/com/food/api/mapper/FoodItemMapper.java,7\0\7047a0c23e7856d80d03f169cf8e8f324daaf384
-s
-Cfood-service/src/main/java/com/food/api/mapper/FoodOrderMapper.java,0\9\090809aa13df47a54bfd2286e30466f17f99a85d

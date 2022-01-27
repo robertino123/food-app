@@ -21,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -84,6 +85,19 @@ public class FoodOrderServiceImpl implements FoodOrderService {
     @Override
     public Page<FoodOrderDTO> getHistory(Long userId, int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "createdDate"));
-        return foodOrderRepository.findByUserId(userId, pageable);
+        return foodOrderRepository.findByUserId(userId, pageable)
+                .map(this::getOrderDTO);
+    }
+
+    private FoodOrderDTO getOrderDTO(FoodOrder foodOrder) {
+        FoodOrderDTO foodOrderDTO = foodOrderMapper.toDto(foodOrder);
+        String dateFormatted = getDateFormatted(foodOrder.getCreatedDate());
+        foodOrderDTO.setCreatedDate(dateFormatted);
+        return foodOrderDTO;
+    }
+
+    private String getDateFormatted(Date date) {
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        return format.format(date);
     }
 }
