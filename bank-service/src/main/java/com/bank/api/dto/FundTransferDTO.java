@@ -15,7 +15,7 @@ public class FundTransferDTO {
     private Long accountFrom;
     private Long accountTo;
     private String date;
-    private Long amount;
+    private Float amount;
     private String comments;
     private FundTransferType transferType;
 

@@ -15,10 +15,8 @@ import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -26,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -67,7 +66,7 @@ public class FoodOrderServiceImpl implements FoodOrderService {
 
         foodList.forEach(food -> foodItemRepository.findById(food.getFoodId()).ifPresent(foodItem -> {
             foodItems.add(foodItem);
-            totalAmount.updateAndGet(v -> v + foodItem.getPrice() * food.getQuantity());
+            totalAmount.updateAndGet(v -> v + (foodItem.getPrice() * food.getQuantity()));
         }));
 
         String response = fundTransferClient.transferFunds(foodOrderRequest.getAccountNumber(), accountNumber, totalAmount.get().toString(), "Payment for food order !");
@@ -75,18 +74,27 @@ public class FoodOrderServiceImpl implements FoodOrderService {
         if (!response.equals(FUND_TRANSFER_SUCCESSFULLY)) {
             throw new Exception(response);
         } else {
-            FoodOrder foodOrder = new FoodOrder(foodItems, 0.1f, userId, new Date());
+            FoodOrder foodOrder = new FoodOrder(foodItems, totalAmount.get(), userId, new Date());
             FoodOrder savedOrder = foodOrderRepository.save(foodOrder);
 
-            return foodOrderMapper.toDto(savedOrder);
+            return getOrderDTO(savedOrder);
         }
     }
 
     @Override
-    public Page<FoodOrderDTO> getHistory(Long userId, int pageNumber, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "createdDate"));
-        return foodOrderRepository.findByUserId(userId, pageable)
-                .map(this::getOrderDTO);
+    public List<FoodOrderDTO> getHistory(Long userId, Integer pageNumber, Integer pageSize) {
+        if (pageNumber == null || pageSize == null) {
+            return foodOrderRepository.findAllByUserId(userId)
+                    .stream()
+                    .map(this::getOrderDTO)
+                    .collect(Collectors.toList());
+        } else {
+            Pageable pageable = PageRequest.of(pageNumber, pageSize);
+            return foodOrderRepository.findAllByUserId(userId, pageable)
+                    .stream()
+                    .map(this::getOrderDTO)
+                    .collect(Collectors.toList());
+        }
     }
 
     private FoodOrderDTO getOrderDTO(FoodOrder foodOrder) {

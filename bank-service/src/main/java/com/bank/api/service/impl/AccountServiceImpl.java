@@ -40,7 +40,7 @@ public class AccountServiceImpl implements AccountService {
         User userToSave = userMapper.toEntity(user);
         User savedUser = userRepository.save(userToSave);
         Long accountNumber = getAccountNumber();
-        Account account = new Account(savedUser, accountNumber, new Date(), 50000L, 50000L, AccountType.CURRENT_ACCOUNT);
+        Account account = new Account(savedUser, accountNumber, new Date(), 50000f, 50000f, AccountType.CURRENT_ACCOUNT);
         accountRepository.save(account);
         return ACCOUNT_CREATED + accountNumber + " account type : " + account.getAccountType();
     }

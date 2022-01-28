@@ -54,7 +54,7 @@ class StatementServiceImplTest {
         c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));
         Date date2 = c.getTime();
 
-        FundTransfer fundTransfer = new FundTransfer(ACCOUNT_1_MOCK, ACCOUNT_2_MOCK, date1, 500L, TEST_QUICK_TRANSFER);
+        FundTransfer fundTransfer = new FundTransfer(ACCOUNT_1_MOCK, ACCOUNT_2_MOCK, date1, 500f, TEST_QUICK_TRANSFER);
         Mockito.when(fundTransferRepository.findAllByAccountNumberAndDate(date1, date2, accountNumber)).thenReturn(Arrays.asList(fundTransfer));
 
         List<FundTransferDTO> actual = statementService.getStatement(month, year, accountNumber.toString());

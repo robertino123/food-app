@@ -25,14 +25,14 @@ public class Account implements Serializable {
 
     private Date openingDate;
 
-    private Long openingBalance;
+    private Float openingBalance;
 
-    private Long currentBalance;
+    private Float currentBalance;
 
     @Enumerated(EnumType.STRING)
     private AccountType accountType;
 
-    public Account(User user, Long accountNumber, Date openingDate, Long openingBalance, Long currentBalance, AccountType accountType) {
+    public Account(User user, Long accountNumber, Date openingDate, Float openingBalance, Float currentBalance, AccountType accountType) {
         this.user = user;
         this.accountNumber = accountNumber;
         this.openingDate = openingDate;

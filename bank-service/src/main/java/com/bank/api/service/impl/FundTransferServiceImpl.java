@@ -31,7 +31,7 @@ public class FundTransferServiceImpl implements FundTransferService {
             Account accountFr = accountFromTransfer.get();
             Account accountToT = accountToTransfer.get();
 
-            if ((accountFr.getCurrentBalance() < Long.parseLong(amount))) {
+            if ((accountFr.getCurrentBalance() < Float.parseFloat(amount))) {
                 return INSUFFICIENT_FUNDS;
             }
 
@@ -49,23 +49,23 @@ public class FundTransferServiceImpl implements FundTransferService {
     }
 
     private void setBalanceOnAccounts(String amount, Account accountFr, Account accountToT) {
-        long remainingBalanceOfCreditAccount = getRemainingBalanceOfCreditAccount(amount, accountFr);
-        long totalBalanceOfDebitedAccount = getTotalBalanceOfDebitedAccount(amount, accountToT);
+        float remainingBalanceOfCreditAccount = getRemainingBalanceOfCreditAccount(amount, accountFr);
+        float totalBalanceOfDebitedAccount = getTotalBalanceOfDebitedAccount(amount, accountToT);
 
         accountFr.setCurrentBalance(remainingBalanceOfCreditAccount);
         accountToT.setCurrentBalance(totalBalanceOfDebitedAccount);
     }
 
     private void doTransfer(String amount, String comments, Account accountFr, Account accountToT) {
-        FundTransfer fundTransferSent = new FundTransfer(accountFr, accountToT, new Date(), Long.parseLong(amount), comments);
+        FundTransfer fundTransferSent = new FundTransfer(accountFr, accountToT, new Date(), Float.parseFloat(amount), comments);
         fundTransferRepository.save(fundTransferSent);
     }
 
-    private long getTotalBalanceOfDebitedAccount(String amount, Account accountToT) {
-        return accountToT.getCurrentBalance() + Long.parseLong(amount);
+    private float getTotalBalanceOfDebitedAccount(String amount, Account accountToT) {
+        return accountToT.getCurrentBalance() + Float.parseFloat(amount);
     }
 
-    private long getRemainingBalanceOfCreditAccount(String amount, Account accountFr) {
-        return accountFr.getCurrentBalance() - Long.parseLong(amount);
+    private float getRemainingBalanceOfCreditAccount(String amount, Account accountFr) {
+        return accountFr.getCurrentBalance() - Float.parseFloat(amount);
     }
 }

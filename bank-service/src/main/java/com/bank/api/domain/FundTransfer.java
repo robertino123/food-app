@@ -26,7 +26,7 @@ public class FundTransfer implements Serializable {
 
     private Date date;
 
-    private Long amount;
+    private Float amount;
 
     private String comments;
 
@@ -34,7 +34,7 @@ public class FundTransfer implements Serializable {
     @Enumerated(EnumType.STRING)
     private FundTransferType fundTransferType;
 
-    public FundTransfer(Account accountFrom, Account accountTo, Date date, Long amount, String comments) {
+    public FundTransfer(Account accountFrom, Account accountTo, Date date, Float amount, String comments) {
         this.accountFrom = accountFrom;
         this.accountTo = accountTo;
         this.date = date;
